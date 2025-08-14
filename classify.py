@@ -93,6 +93,7 @@ aug = Sequential([
 def augment(image, label):
     return aug(image),label
 
+os.makedirs("./cache",exist_ok=True)
 #Cache images processed for correct input and then stream them to the next batch.
 train_ds = train_ds.map(preprocess, num_parallel_calls=parallel_image_processors).cache(filename=preprocess_data).shuffle(4096).map(augment).prefetch(prefetch_size)
 val_ds = val_ds.map(preprocess, num_parallel_calls=parallel_image_processors).cache(filename=preprocess_validate).map(augment).prefetch(prefetch_size)
@@ -108,7 +109,7 @@ def build_model(topless=True):
             GlobalAveragePooling2D(), #important feature extractor
             Dense(1024,activation='relu'), #convert features into combos
             Dropout(0.003), #randomly set some combo to bucket contributions to 0 to prevent overfitting (enough should still be left to influence a bucket)
-            Dense(2, activation='sigmoid')  # Binary output
+            Dense(1, activation='sigmoid')  # Binary output
         ])
     else:
         base_model = MobileNetV2(input_shape=(224, 224, 3), include_top=True, weights='imagenet')
