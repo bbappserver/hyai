@@ -1,13 +1,15 @@
 import hydrus_api
 import hydrus_api.utils
-import tensorflow as tf
 import os,time
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
+import tensorflow as tf
 import settings
 
 topless=True
 checkpoint_path= 'best_model.topless.keras' if topless else 'best_model.keras'
 
 api_key=settings.api_key
+api_url=settings.api_url
 
 mark_archive=settings.mark_archive
 mark_trash=settings.mark_trash
@@ -20,7 +22,7 @@ hash_to_path=settings.hash_to_path
 
 MY_TAGS_SERVICE_KEY=settings.my_tags_service_key
 
-client = hydrus_api.Client(access_key=api_key,api_url="http://seedbox.local:45869/")
+client = hydrus_api.Client(api_key,api_url)
 REQUIRED_PERMISSIONS = {
     hydrus_api.Permission.ADD_TAGS,
     hydrus_api.Permission.SEARCH_FILES,
