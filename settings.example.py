@@ -1,5 +1,7 @@
-hydrus_api_url="http://localhost:45869/"
-hydrus_api_key="replacewithyourAPIkey"
+import os
+
+api_url="http://localhost:45869/"
+api_key="replacewithyourAPIkey"
 
 my_tags_service_key="6c6f63616c2074616773"
 
@@ -32,16 +34,19 @@ api_batch_size=256
 #Supply a function that looks up the file given a hash as hex string
 def hash_to_path(h):
     '''Converts the hash given by hydrus to a filesystem path'''
-    prefix='/media/hydrus'
+    # Add each location containing the fXX folders in the list
+    prefixes = ['/media/hydrus']
 
     use_thumbnail=False
     if use_thumbnail:
         return f'{prefix}/t{h[:2]}/{h}.thumbnail'
 
-    p=f'{prefix}/f{h[:2]}/{h}.{ext}'
+    # p=f'{prefix}/f{h[:2]}/{h}.{ext}'
     #try the usual image file extensions
     #@HydrusDeveloper give us a better API for bulk lookup of paths
     
-    for ext in ('jpg','png','gif','bmp'): 
-        p=f'{prefix}/f{h[:2]}/{h}.{ext}'
-        if os.path.exists(p):return p
+    for prefix in prefixes:
+        for ext in ('jpg','png','gif','bmp'): 
+            p=f'{prefix}/f{h[:2]}/{h}.{ext}'
+            if os.path.exists(p):
+                return p

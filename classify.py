@@ -1,14 +1,15 @@
+import random
+import os
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
+#import matplotlib.pyplot as plt
+#import subprocess
+#import re
 import tensorflow as tf
 from tensorflow.keras import backend as K
 from tensorflow.keras.applications import MobileNetV2
 from tensorflow.keras.layers import GlobalAveragePooling2D, Dense, RandomFlip,Dropout,RandomRotation,RandomZoom
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.callbacks import Callback, ModelCheckpoint
-import random
-import os
-#import matplotlib.pyplot as plt
-#import subprocess
-#import re
 
 #Suppress image load warnings
 os.environ["TF_CPP_MIN_LOG_LEVEL"]="2"
